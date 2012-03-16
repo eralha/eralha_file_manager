@@ -1,0 +1,18 @@
+
+.clearfix:before, .clearfix:after {  content: "\0020"; display: block; height: 0; visibility: hidden;	 } 
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
+.eflcTop{width:50%;background-color:#f1f1f1;border:solid 1px #dddddd;padding:8px;color:#21759b;font-weight:bold;}
+	.eflctName{width:80%;float:left;}
+	.eflctEditLink{width:15%;float:left;}
+
+.eralhaFMListagemContainer{margin-top:30px;}
+	.eralhaFMListagemContainer a:link{color:#21759b;text-decoration:none;font-weight:bold;}
+	.eralhaFMListagemContainer a:hover{color:#579ebe;text-decoration:none;font-weight:bold;}
+	.eralhaFMListagemContainer a:visited{color:#21759b;text-decoration:none;font-weight:bold;}
+	.eralhaFMListagemContainer a:visited:hover{color:#579ebe;text-decoration:none;font-weight:bold;}
+
+	.eralhaFMListItem{width:50%;background-color:#f9f9f9;border:solid 1px #dddddd;border-top:solid 0px;padding:8px;}
+		.efliName{width:80%;float:left;}
+		.efliEditLink{width:15%;float:left;}
