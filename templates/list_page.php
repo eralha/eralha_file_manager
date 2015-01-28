@@ -1,11 +1,11 @@
 <?php
-	$dataSet = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$this->table_files." ORDER BY idFile DESC"), ARRAY_A);
+	$dataSet = $wpdb->get_results("SELECT * FROM ".$this->table_files." ORDER BY idFile DESC", ARRAY_A);
 ?>
 
 <div class=wrap>
 
-	<h2>File Manager</h2>
-	<h3>Upload Files that you want to display in your posts!</h3>
+	<h2>Gestor de ficheiros</h2>
+	<h3>Envie ficheiros para o gestor de forma a poder inserir em paginas ou posts.</h3>
 
 	<form enctype='multipart/form-data' action="admin.php?page=file-manager" method="POST">
 		<fieldset>
@@ -18,17 +18,17 @@
 
 	<div class="eralhaFMListagemContainer">
 		<div class="eflcTop clearfix">
-			<div class="eflctName">File Name</div>
-			<div class="eflctEditLink">Actions</div>
+			<div class="eflctName">Nome do ficheiro</div>
+			<div class="eflctEditLink">Opções</div>
 		</div>
 		<?php foreach($dataSet as $data){?>
 			<div class="eralhaFMListItem clearfix">
 				<div class="efliName">
 					<?php echo $data["vchFileName"];?><br />
-					<b>Tag:</b> [file-manager id:<?php echo $data["idFile"];?>]
+					<b>Código do ficheiro:</b> [file-manager id:<?php echo $data["idFile"];?> name:Whateva]
 				</div>
 				<div class="efliEditLink">
-					<a href="admin.php?page=file-manager&id=<?php echo $data["idFile"];?>&handler=delete-file">delete file</a>
+					<a href="admin.php?page=file-manager&id=<?php echo $data["idFile"];?>&handler=delete-file">apagar ficheiro</a>
 				</div>
 			</div>
 		<?php }?>

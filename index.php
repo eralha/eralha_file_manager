@@ -78,13 +78,13 @@ if (!class_exists("eralha_fm")){
 			global $wpdb;
 			global $user_ID;
 
-			$file = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$this->table_files." WHERE idFile = '".$id."'"), ARRAY_A);
+			$file = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$this->table_files." WHERE idFile = '%d'", $id), ARRAY_A);
 			//DELETE IMAGE FROM UPLOAD FOLDER
 				$uploadPath = str_replace("http://".$_SERVER['HTTP_HOST']."", "", plugin_dir_url( __FILE__ ));
 				unlink("..".$uploadPath."uploads/".$file[0]["vchFileName"]);
 
 			//DELETE FILE FROM DATA BASE
-				$wpdb->query($wpdb->prepare("DELETE FROM ".$this->table_files." WHERE idFile = '".$id."' "));
+				$wpdb->query($wpdb->prepare("DELETE FROM ".$this->table_files." WHERE idFile = '%d' ", $id));
 		}
 
 		function checkFilePost($pluginDir){
@@ -122,24 +122,24 @@ if (!class_exists("eralha_fm")){
 			$pluginDir = str_replace("", "", plugin_dir_url( __FILE__ ));
 			set_include_path($pluginDir);
 
-			preg_match_all('(\[file-manager id:([0-9]*) name:([a-zA-Z0-9[\sãõçáàíìùú\-_.]*]*)\])', $content, $matches, PREG_PATTERN_ORDER);
+			preg_match_all('(\[file-manager id:([0-9]*) name:([a-zA-Z0-9[\sãõçáàíìùú\-_. ]*]*)\])', $content, $matches, PREG_PATTERN_ORDER);
 			
 			for($i=0; $i < count($matches[0]); $i++){
 				$id = str_replace("[file-manager id:", "", $matches[0][$i]);
 				$id = str_replace("]", "", $id);
 
-				$id = $matches[1][0];
-				$name = $matches[2][0];
+				$id = $matches[1][$i];
+				$name = $matches[2][$i];
 
-				$fileData = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$this->table_files." WHERE idFile = '".$id."' "), ARRAY_A);
+				$fileData = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$this->table_files." WHERE idFile = '%d' ", $id), ARRAY_A);
 				
 				//OUTPUT ALL IMAGES FOR GIVEN ID.
 				$template = "";
 				foreach($fileData as $data){
-					$template = "<a href='".$pluginDir."uploads/".$data["vchFileName"]."'>".$name."</a>";
+					$template = "<div class='ficheiro'><a href='".$pluginDir."uploads/".$data["vchFileName"]."' target='_blank'>".$name."</a></div>";
 				}
 
-				$content = str_replace($matches[0][0], $template, $content);
+				$content = str_replace($matches[0][$i], $template, $content);
 			}
 
 			return $content;
@@ -188,8 +188,8 @@ if (!function_exists("eralha_fm_admin_initialize")) {
 		}
 		if ( function_exists('add_submenu_page') ){
 			//ADDS A LINK TO TO A SPECIFIC ADMIN PAGE
-			add_menu_page('File Manager', 'File Manager', 'manage_options', 'file-manager', array($eralha_fm_obj, 'printAdminPage'));
-				add_submenu_page('file-manager', 'Upload File', 'Upload File', 'manage_options', 'file-manager', array($eralha_fm_obj, 'printAdminPage'));
+			add_menu_page('Ficheiros', 'Ficheiros', 'manage_options', 'file-manager', array($eralha_fm_obj, 'printAdminPage'));
+				add_submenu_page('file-manager', 'Enviar ficheiro', 'Enviar ficheiro', 'manage_options', 'file-manager', array($eralha_fm_obj, 'printAdminPage'));
 		}
 	}
 }
